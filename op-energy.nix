@@ -31,6 +31,8 @@ let
   op-energy-db-salt-testnet = "2069267fa745ecd21a6963c58abf41e4d095719aaa6fff9fca6a9f68088327fb";
 
 in pkgs.nixosTest ({
+  # NixOS tests are run inside a virtual machine, and here we specify system of the machine.
+  system = "x86_64-linux";
 
   nodes = {
     server = args@{ config, pkgs, ... }: let
