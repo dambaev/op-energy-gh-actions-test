@@ -11,4 +11,5 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-22.05
         extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
-    - run: nix-build postgrest.nix
+    - run: git clone https://github.com/dambaev/op-energy-development.git --recursive
+    - run: nix-build op-energy.nix
