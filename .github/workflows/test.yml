@@ -12,5 +12,5 @@ jobs:
         nix_path: nixpkgs=channel:nixos-22.05
         extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
     - run: git clone https://github.com/dambaev/op-energy-development.git --recursive
-    - run: cd op-energy-development.git && git submodule update --remote
+    - run: cd op-energy-development && git submodule update --remote
     - run: nix-build op-energy.nix
