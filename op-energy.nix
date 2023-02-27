@@ -17,6 +17,13 @@ let
     # Since it's common for CI not to have $DISPLAY available, we have to explicitly tell the tests "please don't expect any screen available"
     virtualisation.graphics = false;
   };
+  bitcoind-signet-rpc-psk =     builtins.readFile ( "./private/bitcoind-signet-rpc-psk.txt");
+  bitcoind-signet-rpc-pskhmac = builtins.readFile ( "./private/bitcoind-signet-rpc-pskhmac.txt");
+  op-energy-db-psk-signet =     builtins.readFile ( "./private/op-energy-db-psk-signet.txt");
+  op-energy-db-salt-signet =    builtins.readFile ( "./private/op-energy-db-salt-signet.txt");
+  bitcoind-mainnet-rpc-psk =    builtins.readFile ( "./private/bitcoind-mainnet-rpc-psk.txt");
+  op-energy-db-psk-mainnet =    builtins.readFile ( "./private/op-energy-db-psk-mainnet.txt");
+  op-energy-db-salt-mainnet =   builtins.readFile ( "./private/op-energy-db-salt-mainnet.txt");
 
 in pkgs.nixosTest ({
   # NixOS tests are run inside a virtual machine, and here we specify system of the machine.
@@ -28,6 +35,15 @@ in pkgs.nixosTest ({
         sharedModule
         ./op-energy-development/host.nix
       ];
+      environment.etc = {
+        "nixos/private/bitcoind-signet-rpc-psk.txt".text = bitcoind-signet-rpc-psk;
+        "nixos/private/bitcoind-signet-rpc-pskhmac.txt"  = bitcoind-signet-rpc-pskhmac;
+        "nixos/private/op-energy-db-psk-signet.txt"      = op-energy-db-psk-signet;
+        "nixos/private/op-energy-db-salt-signet.txt"     = op-energy-db-salt-signet;
+        "nixos/private/bitcoind-mainnet-rpc-psk.txt"     = bitcoind-mainnet-rpc-psk;
+        "nixos/private/op-energy-db-psk-mainnet.txt"     = op-energy-db-psk-mainnet;
+        "nixos/private/op-energy-db-salt-mainnet.txt"    = op-energy-db-salt-mainnet;
+      };
 
       networking.firewall.allowedTCPPorts = [ 8999 ];
 
