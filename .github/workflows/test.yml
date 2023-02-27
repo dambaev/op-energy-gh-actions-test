@@ -12,6 +12,6 @@ jobs:
         nix_path: nixpkgs=channel:nixos-22.05
         extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
     - run: git clone https://github.com/dambaev/op-energy-development.git --recursive
-    - run: mkdir -p /etc/nixos/private
-    - run: cd op-energy-development/overlays/op-energy/nix && NIX_PATH=nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos:$NIX_PATH nix-shell shell.nix --run "./gen-psk.sh /etc/nixos/private \"mainnet signet testnet\""
+    - run: sudo mkdir -p /etc/nixos/private
+    - run: cd op-energy-development/overlays/op-energy/nix && nix-shell shell.nix --run "./gen-psk.sh /etc/nixos/private \"mainnet signet testnet\""
     - run: nix-build op-energy.nix
