@@ -1,6 +1,6 @@
 let
   # Pin nixpkgs, see pinning tutorial for more details
-  nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/tags/22.11.tar.gz";
+  nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/tags/22.05.tar.gz";
   pkgs = import nixpkgs {};
 
   # Single source of truth for all tutorial constants
