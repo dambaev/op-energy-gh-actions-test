@@ -35,26 +35,24 @@ in pkgs.nixosTest ({
   system = "x86_64-linux";
 
   nodes = {
-    server = { config, pkgs, ... }: {
+    server = args@{ config, pkgs, ... }: {
       imports = [
         sharedModule
-        ./op-energy-development/host.nix
+        ./op-energy-development/host.nix (args // {
+          bitcoind-mainnet-rpc-pskhmac = bitcoind-mainnet-rpc-pskhmac;
+          bitcoind-mainnet-rpc-psk     = bitcoind-mainnet-rpc-psk;
+          bitcoind-signet-rpc-pskhmac  = bitcoind-signet-rpc-pskhmac;
+          bitcoind-signet-rpc-psk      = bitcoind-signet-rpc-psk;
+          bitcoind-testnet-rpc-pskhmac = bitcoind-testnet-rpc-pskhmac;
+          bitcoind-testnet-rpc-psk     = bitcoind-testnet-rpc-psk;
+          op-energy-db-psk-mainnet     = op-energy-db-psk-mainnet;
+          op-energy-db-psk-signet      = op-energy-db-psk-signet;
+          op-energy-db-psk-testnet     = op-energy-db-psk-testnet;
+          op-energy-db-salt-mainnet    = op-energy-db-salt-mainnet;
+          op-energy-db-salt-signet     = op-energy-db-salt-signet;
+          op-energy-db-salt-testnet    = op-energy-db-salt-testnet;
+        })
       ];
-      environment.etc = {
-        "nixos/private/bitcoind-mainnet-rpc-pskhmac.txt".text = bitcoind-mainnet-rpc-pskhmac;
-        "nixos/private/bitcoind-mainnet-rpc-psk.txt".text     = bitcoind-mainnet-rpc-psk;
-        "nixos/private/bitcoind-signet-rpc-pskhmac.txt".text  = bitcoind-signet-rpc-pskhmac;
-        "nixos/private/bitcoind-signet-rpc-psk.txt".text      = bitcoind-signet-rpc-psk;
-        "nixos/private/bitcoind-testnet-rpc-pskhmac.txt".text = bitcoind-testnet-rpc-pskhmac;
-        "nixos/private/bitcoind-testnet-rpc-psk.txt".text     = bitcoind-testnet-rpc-psk;
-        "nixos/private/op-energy-db-psk-mainnet.txt".text     = op-energy-db-psk-mainnet;
-        "nixos/private/op-energy-db-psk-signet.txt".text      = op-energy-db-psk-signet;
-        "nixos/private/op-energy-db-psk-testnet.txt".text     = op-energy-db-psk-testnet;
-        "nixos/private/op-energy-db-salt-mainnet.txt".text    = op-energy-db-salt-mainnet;
-        "nixos/private/op-energy-db-salt-signet.txt".text     = op-energy-db-salt-signet;
-        "nixos/private/op-energy-db-salt-testnet.txt".text    = op-energy-db-salt-testnet;
-      };
-
       networking.firewall.allowedTCPPorts = [ 8999 ];
 
       users = {
