@@ -35,10 +35,8 @@ in pkgs.nixosTest ({
   system = "x86_64-linux";
 
   nodes = {
-    server = args@{ config, pkgs, ... }: {
-      imports = [
-        sharedModule
-        ./op-energy-development/host.nix (args // {
+    server = args@{ config, pkgs, ... }: let
+      op-energy-host = import ./op-energy-development/host.nix (args // {
           bitcoind-mainnet-rpc-pskhmac = bitcoind-mainnet-rpc-pskhmac;
           bitcoind-mainnet-rpc-psk     = bitcoind-mainnet-rpc-psk;
           bitcoind-signet-rpc-pskhmac  = bitcoind-signet-rpc-pskhmac;
@@ -51,7 +49,11 @@ in pkgs.nixosTest ({
           op-energy-db-salt-mainnet    = op-energy-db-salt-mainnet;
           op-energy-db-salt-signet     = op-energy-db-salt-signet;
           op-energy-db-salt-testnet    = op-energy-db-salt-testnet;
-        })
+        });
+    in {
+      imports = [
+        sharedModule
+        op-energy-host
       ];
       networking.firewall.allowedTCPPorts = [ 8999 ];
 
