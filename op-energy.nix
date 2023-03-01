@@ -30,7 +30,8 @@ in pkgs.nixosTest ({
 
   nodes = {
     server = args@{ config, pkgs, ... }: let
-      op-energy-host = import ./op-energy-development/host.nix (args // {
+      sources = pkgs.copyPathToStire ./op-energy-development;
+      op-energy-host = import sources/host.nix (args // {
           bitcoind-mainnet-rpc-pskhmac = bitcoind-mainnet-rpc-pskhmac;
           bitcoind-mainnet-rpc-psk     = bitcoind-mainnet-rpc-psk;
           bitcoind-signet-rpc-pskhmac  = bitcoind-signet-rpc-pskhmac;
