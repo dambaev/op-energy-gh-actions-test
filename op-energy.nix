@@ -3,14 +3,8 @@ let
   nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/archive/0f8f64b54ed07966b83db2f20c888d5e035012ef.tar.gz";
   pkgs = import nixpkgs {};
 
-  # Single source of truth for all tutorial constants
-  database      = "postgres";
-  schema        = "api";
-  table         = "todos";
-  username      = "authenticator";
-  password      = "mysecretpassword";
-  webRole       = "web_anon";
-  postgrestPort = 3000;
+  # Single source of truth for all tests
+  apiPort       = 80;
 
   # NixOS module shared between server and client
   sharedModule = {
@@ -49,14 +43,14 @@ in pkgs.nixosTest ({
           op-energy-db-salt-mainnet    = op-energy-db-salt-mainnet;
           op-energy-db-salt-signet     = op-energy-db-salt-signet;
           op-energy-db-salt-testnet    = op-energy-db-salt-testnet;
-          mainnet_node_ssh_tunnel      = false; # disable ssh_tunnel and mainnet service for github action
+          mainnet_node_ssh_tunnel       in use= false; # disable ssh_tunnel and mainnet service for github action
         });
     in {
       imports = [
         sharedModule
         op-energy-host
       ];
-      networking.firewall.allowedTCPPorts = [ 8999 ];
+      networking.firewall.allowedTCPPorts = [ ];
 
       users = {
         mutableUsers = false;
@@ -87,7 +81,7 @@ in pkgs.nixosTest ({
 
     start_all()
 
-    server.wait_for_open_port(${toString postgrestPort})
+    server.wait_for_open_port(${toString apiPort })
 
     expected = [
         {"id": 1, "done": False, "task": "finish tutorial 0", "due": None},
@@ -96,7 +90,7 @@ in pkgs.nixosTest ({
 
     actual = json.loads(
         client.succeed(
-            "${pkgs.curl}/bin/curl http://server:${toString postgrestPort}/${table}"
+            "${pkgs.curl}/bin/curl http://server:${toString apiPort}/api/v1/version"
         )
     )
 
