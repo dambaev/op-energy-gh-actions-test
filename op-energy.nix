@@ -31,7 +31,7 @@ in pkgs.nixosTest ({
   nodes = {
     server = args@{ config, pkgs, ... }: let
       sources = pkgs.copyPathToStore ./op-energy-development;
-      op-energy-host = import (sources + ./ +  host.nix) (args // {
+      op-energy-host = import ./op-energy-development/host.nix {
           bitcoind-mainnet-rpc-pskhmac = bitcoind-mainnet-rpc-pskhmac;
           bitcoind-mainnet-rpc-psk     = bitcoind-mainnet-rpc-psk;
           bitcoind-signet-rpc-pskhmac  = bitcoind-signet-rpc-pskhmac;
@@ -46,7 +46,7 @@ in pkgs.nixosTest ({
           op-energy-db-salt-testnet    = op-energy-db-salt-testnet;
           mainnet_node_ssh_tunnel      = false; # disable ssh_tunnel and mainnet service for github action
           OP_ENERGY_REPO_LOCATION      = ./op-energy-development/.git/modules/overlays/op-energy;
-        });
+        };
     in {
       imports = [
         sharedModule
