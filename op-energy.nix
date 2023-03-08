@@ -1,3 +1,4 @@
+{ GITHUB_SHA }:
 let
   # Pin nixpkgs, see pinning tutorial for more details
   nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/archive/0f8f64b54ed07966b83db2f20c888d5e035012ef.tar.gz";
@@ -71,7 +72,7 @@ in pkgs.nixosTest ({
     server.wait_for_open_port(${toString apiPort })
 
     expected = [
-        "12345678",
+        "${GITHUB_SHA}",
     ]
 
     actual = json.loads(
