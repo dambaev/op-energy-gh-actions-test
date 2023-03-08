@@ -45,6 +45,7 @@ in pkgs.nixosTest ({
           op-energy-db-salt-signet     = op-energy-db-salt-signet;
           op-energy-db-salt-testnet    = op-energy-db-salt-testnet;
           mainnet_node_ssh_tunnel      = false; # disable ssh_tunnel and mainnet service for github action
+          OP_ENERGY_REPO_LOCATION      = ./op-energy-development/.git/modules/overlays/op-energy
         });
     in {
       imports = [
