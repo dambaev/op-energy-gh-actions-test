@@ -71,13 +71,12 @@ in pkgs.nixosTest ({
     server.wait_for_open_port(${toString apiPort })
 
     expected = [
-        {"id": 1, "done": False, "task": "finish tutorial 0", "due": None},
-        {"id": 2, "done": False, "task": "pat self on back", "due": None},
+        "12345678",
     ]
 
     actual = json.loads(
         client.succeed(
-            "${pkgs.curl}/bin/curl http://server:${toString apiPort}/api/v1/version"
+            "${pkgs.curl}/bin/curl http://server:${toString apiPort}/api/v1/git-hash"
         )
     )
 
