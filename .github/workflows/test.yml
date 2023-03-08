@@ -13,4 +13,4 @@ jobs:
         extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
     - run: git clone https://github.com/dambaev/op-energy-development.git --recursive
     - run: cd op-energy-development && git checkout op-energy-dev-instance-dambaev && git submodule set-branch -b 300-implement-github-action-to-deploy-to-digital-ocean-when-pr-is-merged overlays/op-energy && git submodule update --remote
-    - run: nix-build op-energy.nix --arg GITHUB_SHA $( echo ${{ github.sha }} | cut 1-8 )
+    - run: GITHUB_SHA=$(echo ${{ github.sha }} | cut 1-8) nix-build op-energy.nix --arg GITHUB_SHA $GITHUB_SHA
