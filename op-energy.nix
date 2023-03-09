@@ -70,6 +70,7 @@ in pkgs.nixosTest ({
     start_all()
 
     server.wait_for_open_port(${toString apiPort })
+    server.wait_for_unit( "op-energy-backend-signet.service");
 
     expected = [
         { "gitCommitHash": "${GITHUB_SHA}" },
