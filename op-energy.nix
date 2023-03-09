@@ -72,7 +72,7 @@ in pkgs.nixosTest ({
     server.wait_for_open_port(${toString apiPort })
 
     expected = [
-        "${GITHUB_SHA}",
+        { "GIT_COMMIT_HASH": "${GITHUB_SHA}" },
     ]
 
     actual = json.loads(
