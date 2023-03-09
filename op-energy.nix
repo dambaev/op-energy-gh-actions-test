@@ -44,6 +44,7 @@ in pkgs.nixosTest ({
         op-energy-host
       ];
       networking.firewall.allowedTCPPorts = [ 8995 ];
+      networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
 
       users = {
         mutableUsers = false;
