@@ -5,7 +5,7 @@ let
   pkgs = import nixpkgs {};
 
   # Single source of truth for all tests
-  apiPort       = 80;
+  apiPort       = 8995;
 
   # NixOS module shared between server and client
   sharedModule = {
@@ -43,7 +43,7 @@ in pkgs.nixosTest ({
         sharedModule
         op-energy-host
       ];
-      networking.firewall.allowedTCPPorts = [ ];
+      networking.firewall.allowedTCPPorts = [ 8995 ];
 
       users = {
         mutableUsers = false;
@@ -70,7 +70,6 @@ in pkgs.nixosTest ({
     start_all()
 
     server.wait_for_open_port(${toString apiPort })
-    server.wait_for_unit( "op-energy-backend-signet.service");
 
     expected = [
         { "gitCommitHash": "${GITHUB_SHA}" },
