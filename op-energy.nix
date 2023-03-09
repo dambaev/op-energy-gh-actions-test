@@ -77,7 +77,7 @@ in pkgs.nixosTest ({
 
     actual = json.loads(
         client.succeed(
-            "${pkgs.curl}/bin/curl http://server:${toString apiPort}/api/v1/git-hash"
+            "${pkgs.curl}/bin/curl http://server:${toString apiPort}/api/v1/oe/git-hash"
         )
     )
 
