@@ -75,11 +75,11 @@ in pkgs.nixosTest ({
         { "gitCommitHash": "${GITHUB_SHA}" },
     ]
 
-    actual = json.loads(
-        client.succeed(
+    raw = client.succeed(
             "${pkgs.curl}/bin/curl http://server:${toString apiPort}/signet/api/v1/oe/git-hash"
         )
-    )
+    print( raw)
+    actual = json.loads( raw )
 
     assert expected == actual, "table query returns expected content"
   '';
