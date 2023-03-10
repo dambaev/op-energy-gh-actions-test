@@ -82,6 +82,11 @@ in pkgs.nixosTest ({
     print( raw)
 
     raw = client.succeed(
+            "${pkgs.inetutils}/bin/ping -c 4 4.8"
+        )
+    print( raw)
+
+    raw = client.succeed(
             "${pkgs.inetutils}/bin/ping -c 4 ya.ru"
         )
     print( raw)
