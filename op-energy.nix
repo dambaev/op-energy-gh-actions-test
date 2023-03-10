@@ -77,9 +77,10 @@ in pkgs.nixosTest ({
     raw = client.succeed(
             "${pkgs.curl}/bin/curl http://server:${toString apiPort}/api/v1/oe/git-hash"
         )
-    print( raw)
     actual = json.loads( raw )
+    print( actual)
+    print( expected)
 
-    assert expected == actual, "table query returns expected content"
+    assert expected == actual, "git hash should match"
   '';
 })
