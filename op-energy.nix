@@ -72,9 +72,7 @@ in pkgs.nixosTest ({
 
     server.wait_for_open_port(${toString apiPort })
 
-    expected = [
-        { "gitCommitHash": "${GITHUB_SHA}" },
-    ]
+    expected = { "gitCommitHash": "${GITHUB_SHA}" }
 
     raw = client.succeed(
             "${pkgs.curl}/bin/curl http://server:${toString apiPort}/api/v1/oe/git-hash"
