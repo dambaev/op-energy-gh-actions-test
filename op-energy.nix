@@ -77,21 +77,6 @@ in pkgs.nixosTest ({
     ]
 
     raw = client.succeed(
-            "${pkgs.iproute2}/bin/ip route"
-        )
-    print( raw)
-
-    raw = client.succeed(
-            "${pkgs.inetutils}/bin/ping -c 4 4.8"
-        )
-    print( raw)
-
-    raw = client.succeed(
-            "${pkgs.inetutils}/bin/ping -c 4 ya.ru"
-        )
-    print( raw)
-
-    raw = client.succeed(
             "${pkgs.curl}/bin/curl -v http://server:${toString apiPort}/api/v1/oe/git-hash"
         )
     print( raw)
