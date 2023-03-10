@@ -77,6 +77,11 @@ in pkgs.nixosTest ({
     ]
 
     raw = client.succeed(
+            "${pkgs.iproute2}/bin/ip route"
+        )
+    print( raw)
+
+    raw = client.succeed(
             "${pkgs.inetutils}/bin/ping -c 4 ya.ru"
         )
     print( raw)
